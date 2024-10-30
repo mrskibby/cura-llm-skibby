@@ -3,4 +3,3 @@ pytest
 pandas
 nltk
 rouge-score
-json

@@ -57,6 +57,8 @@ def main():
     # Save the results to a JSON file
     with open('data/exemplar_answers.json', 'w') as outfile:
         json.dump(results, outfile, indent=4)
+    
+    print("Exemplar answers saved to data/exemplar_answers.json")
 
 if __name__ == "__main__":
     main()

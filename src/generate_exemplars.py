@@ -53,7 +53,10 @@ def main():
             "question_id": entry['question_id'],
             "exemplar_answer": exemplar_answer
         })
-    
+        
+    # Ensure the data directory exists
+    os.makedirs('data', exist_ok=True)
+
     # Save the results to a JSON file
     with open('data/exemplar_answers.json', 'w') as outfile:
         json.dump(results, outfile, indent=4)

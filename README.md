@@ -33,11 +33,11 @@ You need an OpenAI API key to generate exemplar answers.
 
     Set your API key as an environment variable:
 
-    On Mac/Linux:
+    On Mac/Linux(bash):
         export OPENAI_API_KEY="your_api_key"
 
-    On Windows:
-        set OPENAI_API_KEY="your_api_key"
+    On Windows (bash):
+        $env:OPENAI_API_KEY="your_api_key"
 
 ### 5. Generate Exemplar Answers
 

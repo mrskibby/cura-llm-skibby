@@ -1,0 +1,41 @@
+name: LLM Evaluation Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        
+    - name: Set OpenAI API Key
+      run: echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Generate exemplar answers
+      run: |
+        source venv/bin/activate
+        python src/generate_exemplars.py
+
+    - name: Run evaluation script
+      run: |
+        source venv/bin/activate
+        python src/evaluate_exemplars.py

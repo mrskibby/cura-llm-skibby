@@ -1,7 +1,7 @@
 import sys
 import os
-import pytest
 import openai
+from unittest.mock import patch
 
 # Add the src directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
@@ -15,8 +15,14 @@ if not openai.api_key:
     raise ValueError("OpenAI API key not found. Please set it as an environment variable.")
 
 
-# @pytest.mark.timeout(10)  # Add a timeout of 10 seconds for the test
-def test_generate_exemplar_answer():
+# Mock the OpenAI API call
+@patch('openai.ChatCompletion.create')
+def test_generate_exemplar_answer(mock_openai):
+    # Mock the API response
+    mock_openai.return_value = {
+        'choices': [{'message': {'content': 'Mocked exemplar answer'}}]
+    }
+    
     task_content = "Sample task content"
     question = "Sample question"
     rubric = "Sample rubric"
@@ -27,3 +33,4 @@ def test_generate_exemplar_answer():
     assert answer is not None
     assert isinstance(answer, str)
     assert len(answer) > 0  # Ensure that the answer is not an empty string
+    assert answer == "Mocked exemplar answer"  # Check if the mocked response is returned
